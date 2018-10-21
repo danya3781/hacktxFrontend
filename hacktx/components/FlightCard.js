@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {View, TextInput, StyleSheet} from 'react-native';
 import { Button, Container, Header, Content, Card, CardItem, Body, Text } from 'native-base';
+import Switch from 'react-native-switch-pro';
+import plane from '../assets/plane.png';
 
 export default class FlightCard extends Component {
     constructor(props) {
@@ -14,7 +16,9 @@ export default class FlightCard extends Component {
             aGate: 'B11',
             dTime: '6:23 PM',
             aTime: '10:41 PM',
-            address: '99 Sunset Blvd, Houston, TX'
+            address: '99 Sunset Blvd, Houston, TX',
+            editable: false,
+            color: 'grey'
         };
     }
 
@@ -35,6 +39,31 @@ export default class FlightCard extends Component {
     render() {
         const dDate = new Date(this.state.dTime);
         const aDate = new Date(this.state.aTime);
+        var edit;
+        var color = 'grey';
+        if (!this.state.editable){
+            edit =
+                <Button style={{position: 'fixed'}} info rounded onPress={() => {
+                    this.setState({editable: true})
+                }} style={{
+                    height: 24,
+                    marginLeft: 30
+                }}>
+                    <Text style={{fontSize: 12}}>Edit</Text>
+                </Button>;
+        } else {
+            color = 'black';
+            edit =
+                <Button style={{position: 'fixed'}} success rounded onPress={() => {
+                    this.setState({editable: false})
+                }} style={{
+                    height: 24,
+                    marginLeft: 30
+                }}>
+                    <Text style={{fontSize: 12}}>Done</Text>
+                </Button>;
+        }
+
         return (
 
             <Card style={styles.card}>
@@ -51,7 +80,7 @@ export default class FlightCard extends Component {
                 </CardItem>
                 <CardItem>
 
-                    <Body style={{marginBottom: '20%'}}>
+                    <Body style={{marginBottom: '13%'}}>
                         <View style={{width: "100%", flexDirection: 'column'}}>
                         <View style={{flex: 1, flexDirection: 'row', alignItems:'center'}}>
                             <View style={{flexDirection: 'column', flex: 1,}}>
@@ -87,16 +116,23 @@ export default class FlightCard extends Component {
 
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
 
-                                <Text> {this.state.address}</Text>
-                                <Button info rounded onPress={() => {}} style={{
-                                    height: 24,
-                                    marginLeft: 30
-                                }}>
-                                    <Text style={{fontSize: 12}}>Edit</Text>
-                                </Button>
+                                <TextInput style={{color: color}} editable={this.state.editable} > {this.state.address}</TextInput>
+                                <View style={{marginLeft: 190, flexDirection: 'column', position: 'absolute'}}>
+                                {edit}
+                                </View>
                             </View>
                         </View>
+                        <View style={{marginTop: 28, flex: 1, alignItems: 'center', flexDirection: 'row'}}>
+                            <Text style={{}}>
+                               Uber Notifications:
+                            </Text>
+                            <Switch height={30} width={50} style={{marginLeft: 20}}>
+
+                            </Switch>
+
                         </View>
+                        </View>
+
                     </Body>
                 </CardItem>
             </Card>
@@ -108,7 +144,6 @@ export default class FlightCard extends Component {
 const styles = StyleSheet.create({
     card: {
         flex: 1,
-        backgroundColor: '#fff',
         marginLeft: "5%",
         marginRight: "5%",
         marginTop: "5%",

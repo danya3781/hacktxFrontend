@@ -20,7 +20,7 @@ export default class Home extends Component {
         const {params} = this.props.navigation.state;
         const name = params.name;
         console.log("Name", name);
-        axios.get('http://b8bfbe5b.ngrok.io/reservation', {
+        axios.get('http://fa6d4464.ngrok.io/reservation', {
             params: {
                 recordLocator: name
             }
@@ -57,9 +57,11 @@ export default class Home extends Component {
         return (
 
             <Container>
-                <Content>
+                <Content style={{backgroundColor: '#0078d2',}}>
+
                     {this.state.cardData.map(flight => (<FlightCard cardData={flight} key={flight.id} />)
                     )}
+
                 </Content>
             </Container>
         );
