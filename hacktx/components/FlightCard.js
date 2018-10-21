@@ -18,17 +18,33 @@ export default class FlightCard extends Component {
         };
     }
 
+    componentDidMount() {
+        const data = this.props.cardData;
+        this.setState({
+            flightName: data.flightNumber,
+            dAirport: data.dAirport,
+            aAirport: data.aAirport,
+            aTerminal: data.aTerminal,
+            aGate: data.aGate,
+            dTime: data.dTime,
+            aTime: data.aTime,
+            id: data.id
+        })
+    }
+
     render() {
+        const dDate = new Date(this.state.dTime);
+        const aDate = new Date(this.state.aTime);
         return (
 
             <Card style={styles.card}>
                 <CardItem header>
                     <View style={{flexDirection: 'column'}}>
                         <Text >
-                            {this.state.flightName}
+                            Flight {this.state.flightName}
                         </Text>
                         <Text >
-                            {this.state.date}
+                            {dDate.toLocaleString('en-US', { month: 'short', day:'numeric', hour12: true })}
                         </Text>
                     </View>
 
@@ -43,7 +59,7 @@ export default class FlightCard extends Component {
                                     {this.state.dAirport}
                                 </Text>
                                 <Text>
-                                    {this.state.dTime}
+                                    {dDate.toLocaleString('en-US', { hour: 'numeric', minute:'numeric', hour12: true })}
                                 </Text>
                                 <Text>
                                     {this.state.dGate}
@@ -59,10 +75,10 @@ export default class FlightCard extends Component {
                                     {this.state.aAirport}
                                 </Text>
                                 <Text>
-                                    {this.state.aTime}
+                                    {aDate.toLocaleString('en-US', { hour: 'numeric', minute:'numeric', hour12: true })}
                                 </Text>
                                 <Text>
-                                    {this.state.aGate}
+                                    {this.state.aTerminal}{this.state.aGate}
                                 </Text>
                             </View>
                         </View>
